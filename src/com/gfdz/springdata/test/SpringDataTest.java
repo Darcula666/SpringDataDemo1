@@ -2,6 +2,7 @@ package com.gfdz.springdata.test;
 
 import com.gfdz.springdata.entity.Person;
 import com.gfdz.springdata.repsotory.PersonRepsotory;
+import com.gfdz.springdata.service.PersionService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,10 +21,12 @@ import java.util.List;
 public class SpringDataTest {
     private ApplicationContext ctx = null;
     private PersonRepsotory personRepsotory;
+    private PersionService persionService;
 
     {
         ctx = new ClassPathXmlApplicationContext("spring-config.xml");
         personRepsotory = ctx.getBean(PersonRepsotory.class);
+        persionService=ctx.getBean(PersionService.class);
     }
 
     @Test
@@ -93,5 +96,9 @@ public class SpringDataTest {
          long count=personRepsotory.getTotalCount();
          System.out.println(count);
 
+    }
+    @Test
+    public void testModifying(){
+        persionService.updatePersion("BB@imooc.com",1);
     }
 }

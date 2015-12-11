@@ -2,6 +2,7 @@ package com.gfdz.springdata.repsotory;
 
 
 import com.gfdz.springdata.entity.Person;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.RepositoryDefinition;
@@ -73,4 +74,8 @@ public interface PersonRepsotory extends Repository<Person, Integer> {
     @Query(value = "SELECT COUNT(id) FROM jpa_persons" ,nativeQuery = true)
     long getTotalCount();
 
+    //更新记录
+    @Modifying
+    @Query("update Person p set p.email=:email where id=:id")
+    void updatePeson(@Param("email")String email,@Param("id")Integer id);
 }
