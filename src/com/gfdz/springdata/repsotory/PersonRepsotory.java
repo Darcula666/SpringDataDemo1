@@ -74,7 +74,10 @@ public interface PersonRepsotory extends Repository<Person, Integer> {
     @Query(value = "SELECT COUNT(id) FROM jpa_persons" ,nativeQuery = true)
     long getTotalCount();
 
-    //更新记录
+    //可以通过自定义的JPQL完成UPDATE和DELETE 注意JPQL不支持INSERT
+    //在@Query注解中编写JPQL语句，但必须使用 @Modifying 进行修饰，以通知springData，这是应该
+    //UPDATE或DELETE操作需要使用事务，此时需要定义Service层，在Service层的方法上添加事务操作。
+    //默认情况下，springdata的每个方法上有事务，但都是只有一个只读事务，他们不能完成修改操作！
     @Modifying
     @Query("update Person p set p.email=:email where id=:id")
     void updatePeson(@Param("email")String email,@Param("id")Integer id);
